@@ -5,4 +5,8 @@
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\..\Data\Graphql.Domain\Graphql.Domain.csproj" />
+	</ItemGroup>
+
 </Project>

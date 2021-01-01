@@ -1,11 +1,21 @@
-﻿namespace GraphqlDomain.Entities
+﻿using Graphql.Domain.Entities;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
+namespace GraphqlDomain.Entities
 {
     public class User
     {
         public int Id { get; set; }
 
+        [Required]
         public string Name { get; set; }
 
-        public string Email { get; set; }
+        [Required]
+        public string Surname { get; set; }
+
+        public Contact Contact { get; set; }
+
+        public ICollection<Role> Roles { get; set; }
     }
 }
