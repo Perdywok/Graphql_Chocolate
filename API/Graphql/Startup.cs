@@ -5,6 +5,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using GraphqlDomain;
+using Graphql.Business.Orders;
+using Graphql.Domain.DataLoaders;
+using Graphql.Business.Users;
 
 namespace Graphql
 {
@@ -16,6 +19,19 @@ namespace Graphql
         {
             services.AddPooledDbContextFactory<ApplicationDbContext>(
                 options => options.UseSqlite("Data Source=graphql.db"));
+
+            services
+                .AddGraphQLServer()
+                .AddQueryType(d => d.Name("Query"))
+                    .AddTypeExtension<UserQueries>()
+                .AddType<UserType>()
+                .EnableRelaySupport()
+                .AddFiltering()
+                .AddSorting()
+                .AddInMemorySubscriptions()
+                .AddDataLoader<UserByIdDataLoader>()
+                .AddDataLoader<ContactByIdDataLoader>()
+                .AddDataLoader<RoleByIdDataLoader>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -26,14 +42,12 @@ namespace Graphql
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseWebSockets();
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
+                endpoints.MapGraphQL();
             });
         }
     }
