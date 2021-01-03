@@ -24,6 +24,8 @@ namespace Graphql
                 .AddGraphQLServer()
                 .AddQueryType(d => d.Name("Query"))
                     .AddTypeExtension<UserQueries>()
+                .AddMutationType(d => d.Name("Mutation"))
+                    .AddTypeExtension<UserMutations>()
                 .AddType<UserType>()
                 .EnableRelaySupport()
                 .AddFiltering()
