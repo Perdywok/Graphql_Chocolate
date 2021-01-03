@@ -22,6 +22,12 @@ namespace GraphqlDomain
             modelBuilder
                 .Entity<UserRole>()
                 .HasKey(ur => new { ur.UserId, ur.RoleId });
+
+            // one to one: User <-> Contact
+            modelBuilder.Entity<User>()
+            .HasOne(a => a.Contact)
+            .WithOne(a => a.User)
+            .HasForeignKey<Contact>(c => c.UserId);
         }
     }
 }

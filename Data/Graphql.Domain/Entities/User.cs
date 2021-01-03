@@ -14,7 +14,9 @@ namespace GraphqlDomain.Entities
         [Required]
         public string Surname { get; set; }
 
-        public Contact Contact { get; set; }
+        public int? ContactId { get; set; }
+
+        public Contact? Contact { get; set; }
 
         public ICollection<Role> Roles { get; set; }
     }

@@ -57,23 +57,17 @@ namespace Graphql.Business.Users
 
             [UseApplicationDbContext]
             public async Task<Contact> GetContactAsync(
-                  User User,
+                  User user,
                   [ScopedService] ApplicationDbContext dbContext,
                   ContactByIdDataLoader contactById,
                   CancellationToken cancellationToken)
             {
-                // refactor
-                int? contactId = (await dbContext.Users
-                    .Include(s => s.Contact)
-                    .FirstOrDefaultAsync(s => s.Id == User.Id))
-                    .Contact?.Id;
-
-                if (!contactId.HasValue)
+                if (!user.ContactId.HasValue)
                 {
                     return null;
                 }
 
-                return await contactById.LoadAsync(contactId.Value, cancellationToken);
+                return await contactById.LoadAsync(user.ContactId.Value, cancellationToken);
             }
         }
     }

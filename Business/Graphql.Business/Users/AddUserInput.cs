@@ -1,6 +1,10 @@
-﻿namespace Graphql.Business.Users
+﻿using System.Collections.Generic;
+
+namespace Graphql.Business.Users
 {
     public record AddUserInput(
         string Name,
-        string Surname);
+        string Surname,
+        int? ContactId,
+        IReadOnlyList<int>? RoleIds);
 }

@@ -8,6 +8,7 @@ using GraphqlDomain;
 using Graphql.Business.Orders;
 using Graphql.Domain.DataLoaders;
 using Graphql.Business.Users;
+using Graphql.Business.Contacts;
 
 namespace Graphql
 {
@@ -26,6 +27,7 @@ namespace Graphql
                     .AddTypeExtension<UserQueries>()
                 .AddMutationType(d => d.Name("Mutation"))
                     .AddTypeExtension<UserMutations>()
+                    .AddTypeExtension<ContactMutations>()
                 .AddType<UserType>()
                 .EnableRelaySupport()
                 .AddFiltering()
